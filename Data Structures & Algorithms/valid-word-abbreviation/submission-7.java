@@ -1,0 +1,34 @@
+class Solution {
+    public boolean validWordAbbreviation(String a, String b) {
+        int startA = 0;
+        int startB = 0;
+        a+=" ";
+        b+=" ";
+        int m = a.length();
+        int n = b.length();
+        String integer = "";
+        boolean isInteger = false;
+        boolean isValid = true;
+
+        while(startB < n && startA < m){
+            if(!isValid) break;
+            char current = b.charAt(startB++);
+            if((current >= 'a' && current <= 'z') || current == ' '){
+                // check for previous value
+                if(isInteger){
+                    if(integer.charAt(0)=='0') isValid=false;
+                    startA+=Integer.parseInt(integer);
+                    if(startA>m) isValid=false;
+                }
+                // process current value
+                if(startA >= m || current!=a.charAt(startA++)) isValid = false;
+                isInteger = false;
+                integer = "";
+            }else{
+               isInteger = true;
+               integer+=current;
+            }
+        }
+        return isValid;
+    }
+}

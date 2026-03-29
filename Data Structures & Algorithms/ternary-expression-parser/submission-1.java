@@ -1,0 +1,29 @@
+class Solution {
+    public String parseTernary(String a) {
+        Stack<String> stack = new Stack<>();
+        String current = "";
+
+        int index = a.length()-1;
+        while(index>=0){
+            char c = a.charAt(index--);
+            if(c==':'){
+                if(!current.isEmpty()){
+                    stack.push(current);
+                    current = "";
+                }
+            }else if(c=='?'){
+                if(!current.isEmpty()){
+                    stack.push(current);
+                    current = "";
+                }
+                String one = stack.pop();
+                String two = stack.pop();
+                stack.push(a.charAt(index--) == 'T' ? one : two);
+            }else{
+                current+=c;
+            }
+        }
+
+        return stack.pop();
+    }
+}
